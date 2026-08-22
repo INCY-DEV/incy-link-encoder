@@ -1,7 +1,7 @@
 {
   "name": "@incy/link-encoder",
-  "version": "1.0.1",
-  "description": "Encode subscription URLs into incy://crypt1/<payload> deep links so they don't sit in chat histories as plain VPN-URL text. AES-256-GCM with a key shared with the INCY iOS/Android/Desktop clients.",
+  "version": "1.2.0",
+  "description": "Encode subscription URLs into incy://crypt1/<payload> deep links so they don't sit in chat histories as plain VPN-URL text. AES-256-GCM with a key shared with the INCY iOS/Android/Desktop clients. Node and Web Crypto (browser) entry points.",
   "keywords": [
     "incy",
     "vpn",
@@ -22,11 +22,19 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "bin": {
+    "incy-link-encoder": "dist/cli.mjs"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "import": "./dist/web.mjs",
+      "require": "./dist/web.js"
     }
   },
   "files": [
@@ -35,7 +43,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup src/index.ts src/web.ts --format cjs,esm --dts --clean && tsup src/cli.ts --format esm",
     "test": "node --import tsx --test test/*.test.ts",
     "lint": "tsc --noEmit",
     "gen-keymat": "node scripts/gen-keymat.mjs",

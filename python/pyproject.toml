@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "incy-link-encoder"
+version = "1.2.0"
+description = "Encode subscription URLs into incy://crypt1/<payload> deep links (Python port of @incy/link-encoder). AES-256-GCM with a key shared with the INCY iOS/Android/Desktop clients."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{ name = "INCY", email = "main@incy.cc" }]
+keywords = ["incy", "vpn", "deeplink", "encryption", "aes-gcm"]
+dependencies = ["cryptography>=41"]
+
+[project.urls]
+Homepage = "https://incy.cc/encrypt"
+Repository = "https://github.com/INCY-DEV/incy-link-encoder"
+
+[tool.hatch.build.targets.wheel]
+packages = ["incy_link_encoder"]

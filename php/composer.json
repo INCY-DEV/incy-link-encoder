@@ -1,0 +1,21 @@
+{
+    "name": "incy/link-encoder",
+    "description": "Encode subscription URLs into incy://crypt1/<payload> deep links (PHP port of @incy/link-encoder). AES-256-GCM with a key shared with the INCY iOS/Android/Desktop clients.",
+    "type": "library",
+    "keywords": ["incy", "vpn", "deeplink", "encryption", "aes-gcm"],
+    "homepage": "https://incy.cc/encrypt",
+    "license": "MIT",
+    "authors": [{ "name": "INCY", "email": "main@incy.cc" }],
+    "require": {
+        "php": ">=8.1",
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": { "Incy\\LinkEncoder\\": "src/" }
+    },
+    "scripts": {
+        "test": "php tests/run.php"
+    }
+}
