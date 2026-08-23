@@ -6,7 +6,9 @@ import unittest
 
 from incy_link_encoder import (
     KEY_FINGERPRINT,
+    SCHEMES,
     SCHEME_VERSION,
+    VERSION,
     decrypt_link,
     encrypt_link,
     encrypt_link_deterministic,
@@ -79,6 +81,15 @@ class LinkEncoderTest(unittest.TestCase):
         decoded = decrypt_link(encrypt_link("https://test/x", name="X" * 500))
         assert decoded.name is not None
         self.assertEqual(len(decoded.name), 128)
+
+    def test_schemes_registry_describes_crypt1(self):
+        self.assertEqual(list(SCHEMES.keys()), ["crypt1"])
+        self.assertEqual(SCHEMES["crypt1"].host, "crypt1")
+        self.assertEqual(SCHEMES["crypt1"].prefix, "incy://crypt1/")
+        self.assertEqual(SCHEMES["crypt1"].key_fingerprint, KEY_FINGERPRINT)
+
+    def test_version_is_current(self):
+        self.assertEqual(VERSION, "1.3.0")
 
 
 if __name__ == "__main__":

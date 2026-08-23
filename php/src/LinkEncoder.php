@@ -24,7 +24,7 @@ namespace Incy\LinkEncoder;
  */
 final class LinkEncoder
 {
-    public const VERSION = '1.2.0';
+    public const VERSION = '1.3.0';
     public const SCHEME_VERSION = 'crypt1';
     public const KEY_FINGERPRINT =
         'b6bf708471cc90043232967660aade86a50b4e57929db2e53c5fa34db624c08c';
@@ -47,6 +47,25 @@ final class LinkEncoder
     private const TAG_LEN = 16;
 
     private static ?string $keyCache = null;
+
+    /**
+     * Registry of every deep-link scheme this build understands (today
+     * only `crypt1`). A future key rotation adds `crypt2` here while
+     * keeping `crypt1` so old links never stop decoding. Mirrors
+     * SCHEMES in the JS package.
+     *
+     * @return array<string, array{host: string, prefix: string, keyFingerprint: string}>
+     */
+    public static function schemes(): array
+    {
+        return [
+            'crypt1' => [
+                'host' => 'crypt1',
+                'prefix' => self::LINK_PREFIX,
+                'keyFingerprint' => self::KEY_FINGERPRINT,
+            ],
+        ];
+    }
 
     private static function deriveKey(): string
     {

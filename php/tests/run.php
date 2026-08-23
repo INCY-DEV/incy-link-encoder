@@ -128,5 +128,17 @@ check('query-param URL survives JSON escaping', function () {
     assertSame($url, $decoded['url'], 'url');
 });
 
+check('schemes() registry describes crypt1', function () {
+    $s = LinkEncoder::schemes();
+    assertSame(['crypt1'], array_keys($s), 'scheme keys');
+    assertSame('crypt1', $s['crypt1']['host'], 'host');
+    assertSame('incy://crypt1/', $s['crypt1']['prefix'], 'prefix');
+    assertSame(LinkEncoder::KEY_FINGERPRINT, $s['crypt1']['keyFingerprint'], 'fingerprint');
+});
+
+check('version is current', function () {
+    assertSame('1.3.0', LinkEncoder::VERSION, 'version');
+});
+
 echo $failures === 0 ? "\nAll tests passed\n" : "\n{$failures} test(s) FAILED\n";
 exit($failures === 0 ? 0 : 1);

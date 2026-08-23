@@ -62,7 +62,7 @@ const (
 // Runtime info — mirrors VERSION / SCHEME_VERSION / KEY_FINGERPRINT
 // in the JS package.
 const (
-	Version        = "1.2.0"
+	Version        = "1.3.0"
 	SchemeVersion  = "crypt1"
 	KeyFingerprint = expectedKeyFingerprint
 )
@@ -74,6 +74,21 @@ type DecryptedLink struct {
 	// Name is the optional human-readable name supplied at encrypt
 	// time ("" if absent).
 	Name string
+}
+
+// SchemeInfo holds one deep-link scheme's identifying constants.
+type SchemeInfo struct {
+	Host           string // URL host segment, e.g. "crypt1"
+	Prefix         string // full link prefix, e.g. "incy://crypt1/"
+	KeyFingerprint string // SHA-256 of that scheme's AES key K
+}
+
+// Schemes is the registry of every deep-link scheme this build
+// understands (today only "crypt1"). A future key rotation adds
+// "crypt2" here while keeping "crypt1" so old links never stop
+// decoding. Mirrors SCHEMES in the JS package. Treat as read-only.
+var Schemes = map[string]SchemeInfo{
+	"crypt1": {Host: host, Prefix: linkPrefix, KeyFingerprint: expectedKeyFingerprint},
 }
 
 var deriveKey = sync.OnceValues(func() ([]byte, error) {

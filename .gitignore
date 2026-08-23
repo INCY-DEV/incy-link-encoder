@@ -6,3 +6,11 @@ dist/
 .idea/
 .vscode/
 .npmrc
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.venv-build/
+build/

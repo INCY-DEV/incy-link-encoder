@@ -41,6 +41,7 @@ LinkEncoder::encryptLinkDeterministic(string $url, string $iv, ?string $name = n
 LinkEncoder::VERSION
 LinkEncoder::SCHEME_VERSION   // "crypt1"
 LinkEncoder::KEY_FINGERPRINT  // SHA-256 of K1
+LinkEncoder::schemes()        // registry of known schemes (today: crypt1)
 ```
 
 ## Tests

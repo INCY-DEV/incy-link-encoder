@@ -32,7 +32,9 @@ from ._keymat import KEYMAT_A_B64, KEYMAT_B_B64
 __all__ = [
     "DecryptedLink",
     "KEY_FINGERPRINT",
+    "SCHEMES",
     "SCHEME_VERSION",
+    "SchemeInfo",
     "VERSION",
     "decrypt_link",
     "encrypt_link",
@@ -62,9 +64,31 @@ _LINK_PREFIX = f"{_SCHEME}://{_HOST}/"
 _IV_LEN = 12
 _TAG_LEN = 16
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 SCHEME_VERSION = "crypt1"
 KEY_FINGERPRINT = _EXPECTED_KEY_FINGERPRINT
+
+
+@dataclass(frozen=True)
+class SchemeInfo:
+    """One deep-link scheme's identifying constants."""
+
+    host: str
+    prefix: str
+    key_fingerprint: str
+
+
+# Registry of every deep-link scheme this build understands (today only
+# ``crypt1``). A future key rotation adds ``crypt2`` here while keeping
+# ``crypt1`` so old links never stop decoding. Mirrors ``SCHEMES`` in
+# the JS package.
+SCHEMES: dict[str, SchemeInfo] = {
+    "crypt1": SchemeInfo(
+        host=_HOST,
+        prefix=_LINK_PREFIX,
+        key_fingerprint=_EXPECTED_KEY_FINGERPRINT,
+    ),
+}
 
 _key_cache: bytes | None = None
 

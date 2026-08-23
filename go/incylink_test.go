@@ -17,6 +17,25 @@ func TestKeyFingerprintMatchesCrossPlatformConstant(t *testing.T) {
 	}
 }
 
+func TestSchemesRegistryDescribesCrypt1(t *testing.T) {
+	if len(Schemes) != 1 {
+		t.Fatalf("expected 1 scheme, got %d", len(Schemes))
+	}
+	s, ok := Schemes["crypt1"]
+	if !ok {
+		t.Fatal("crypt1 missing from Schemes")
+	}
+	if s.Host != "crypt1" || s.Prefix != "incy://crypt1/" || s.KeyFingerprint != KeyFingerprint {
+		t.Fatalf("crypt1 scheme info wrong: %+v", s)
+	}
+}
+
+func TestVersionIsCurrent(t *testing.T) {
+	if Version != "1.3.0" {
+		t.Fatalf("version drifted: %s", Version)
+	}
+}
+
 func TestRoundTrip(t *testing.T) {
 	url := "https://sub.example.com/test-token"
 	link, err := EncryptLink(url, "")

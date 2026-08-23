@@ -42,6 +42,7 @@ encrypt_link_deterministic(url: str, iv: bytes, name: str | None = None) -> str 
 VERSION: str
 SCHEME_VERSION: str   # "crypt1"
 KEY_FINGERPRINT: str  # SHA-256 of K1
+SCHEMES: dict[str, SchemeInfo]  # registry of known schemes (today: crypt1)
 ```
 
 ## Tests
