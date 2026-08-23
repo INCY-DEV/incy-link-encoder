@@ -1,6 +1,6 @@
 {
   "name": "@incy/link-encoder",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Encode subscription URLs into incy://crypt1/<payload> deep links so they don't sit in chat histories as plain VPN-URL text. AES-256-GCM with a key shared with the INCY iOS/Android/Desktop clients. Node and Web Crypto (browser) entry points.",
   "keywords": [
     "incy",
@@ -35,6 +35,11 @@
       "types": "./dist/web.d.ts",
       "import": "./dist/web.mjs",
       "require": "./dist/web.js"
+    },
+    "./sync": {
+      "types": "./dist/sync.d.ts",
+      "import": "./dist/sync.mjs",
+      "require": "./dist/sync.js"
     }
   },
   "files": [
@@ -43,7 +48,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup src/index.ts src/web.ts --format cjs,esm --dts --clean && tsup src/cli.ts --format esm",
+    "build": "tsup src/index.ts src/web.ts src/sync.ts --format cjs,esm --dts --clean && tsup src/cli.ts --format esm",
     "test": "node --import tsx --test test/*.test.ts",
     "lint": "tsc --noEmit",
     "gen-keymat": "node scripts/gen-keymat.mjs",
@@ -57,5 +62,9 @@
     "tsup": "^8.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^2.3.0",
+    "@noble/hashes": "^2.3.0"
   }
 }

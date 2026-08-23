@@ -218,7 +218,7 @@ export function parsePlaintext(plaintext: Uint8Array): DecryptedLink {
  * Library version + key fingerprint. Useful when reporting bugs or
  * verifying the client/server are running compatible builds.
  */
-export const VERSION = '1.2.0';
+export const VERSION = '1.3.0';
 export const SCHEME_VERSION = 'crypt1';
 export const KEY_FINGERPRINT = EXPECTED_KEY_FINGERPRINT;
 

@@ -72,6 +72,35 @@ Notes:
   public: the key ships in this package and in every INCY client (see
   "What this is NOT" below).
 
+## Synchronous entry (no await)
+
+The Web entry is Promise-based because `crypto.subtle` is async. Some
+hosts need to build a link inside a **synchronous** codepath where an
+`await` is impossible — most notably template-variable substitution
+(e.g. Remnawave's `INCY_CRYPT1_LINK`), and any case where the very next
+step is navigating to the `incy://` scheme. On iOS/Safari that
+navigation must happen inside the user-activation tick of the tap;
+awaiting first loses the "fresh tap" and the link silently won't open.
+
+The **`/sync` entry** solves this — same wire format, same key, same
+function names, but AES-256-GCM and SHA-256 run on
+[`@noble/ciphers`](https://github.com/paulmillr/noble-ciphers) +
+`@noble/hashes` (audited, MIT), so everything is synchronous and runs
+in any runtime including the browser:
+
+```js
+import { encryptLink } from '@incy/link-encoder/sync';
+
+const link = encryptLink('https://sub.your-provider.example/abc123token', {
+  name: 'My Provider VPN',
+}); // ← no await; safe to use right before location.href = link
+```
+
+Output is byte-for-byte identical to the Node and Web entries (the test
+suite cross-checks all three against the same pinned vector). This entry
+pulls in the two `@noble/*` packages; prefer `/web` when you're already
+in an async context and want zero dependencies.
+
 ## Other languages
 
 Wire-compatible ports live in this repo, all pinned against the same
@@ -187,6 +216,10 @@ decryptLink(link: string): { url: string; name?: string }
 // '@incy/link-encoder/web' — browsers/workers/edge, Promise-based
 encryptLink(url: string, opts?: { name?: string }): Promise<string>
 decryptLink(link: string): Promise<{ url: string; name?: string }>
+
+// '@incy/link-encoder/sync' — synchronous, pure-JS (@noble/ciphers)
+encryptLink(url: string, opts?: { name?: string }): string
+decryptLink(link: string): { url: string; name?: string }
 
 // For deterministic tests only — never reuse an IV with different
 // plaintexts in production code.
