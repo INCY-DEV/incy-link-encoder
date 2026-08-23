@@ -6,6 +6,10 @@
     "homepage": "https://incy.cc/encrypt",
     "license": "MIT",
     "authors": [{ "name": "INCY", "email": "main@incy.cc" }],
+    "support": {
+        "issues": "https://github.com/INCY-DEV/incy-link-encoder/issues",
+        "source": "https://github.com/INCY-DEV/incy-link-encoder-php"
+    },
     "require": {
         "php": ">=8.1",
         "ext-openssl": "*",
